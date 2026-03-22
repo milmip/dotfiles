@@ -1,0 +1,143 @@
+*cpp_vector.txt*    Aide-mémoire C++ : std::vector
+
+===============================================================================
+CPP VECTOR — AIDE MÉMOIRE                           *cpp_vector*
+
+Objectif : rappel rapide de la syntaxe std::vector (déclarations, accès,
+modification, itération). Pas d'explications théoriques.
+
+===============================================================================
+INCLUDE & NAMESPACE                                 *cpp_vector-include*
+
+#include <vector>
+#include <algorithm>
+#include <numeric>
+#include <iostream>
+
+using std::vector;
+
+===============================================================================
+DECLARATIONS                                       *cpp_vector-decl*
+
+vector<int> v;                     // vide
+vector<int> v(10);                 // 10 éléments (0)
+vector<int> v(10, 42);             // 10 éléments initialisés à 42
+vector<int> v = {1, 2, 3};          // initializer_list
+vector<int> v{1, 2, 3};             // uniforme
+vector<int> v2(v);                  // copie
+vector<int> v3 = std::move(v);      // move
+
+vector<vector<int>> m(3, vector<int>(4)); // matrice 3x4
+
+===============================================================================
+TAILLE & CAPACITE                                  *cpp_vector-size*
+
+v.size();        // nombre d'éléments
+v.empty();       // bool
+v.capacity();    // capacité actuelle
+v.reserve(100);  // réserve mémoire
+v.shrink_to_fit();
+
+===============================================================================
+ACCES AUX ELEMENTS                                 *cpp_vector-access*
+
+v[i];            // pas de vérification
+v.at(i);         // vérifie les bornes
+v.front();
+v.back();
+v.data();        // pointeur brut
+
+===============================================================================
+AFFECTATION / MODIFICATION                         *cpp_vector-modify*
+
+v.push_back(5);
+v.emplace_back(5);
+
+v.pop_back();
+
+v.insert(v.begin(), 1);
+v.insert(v.begin() + 2, 3);
+v.insert(v.end(), {7, 8, 9});
+
+v.erase(v.begin());
+v.erase(v.begin(), v.begin() + 3);
+
+v.clear();
+
+v.assign(5, 0);          // 5 zéros
+v.assign({1, 2, 3});
+
+===============================================================================
+ITERATION                                          *cpp_vector-iter*
+
+for (size_t i = 0; i < v.size(); ++i) {
+std::cout << v[i];
+}
+
+for (int x : v) {
+std::cout << x;
+}
+
+for (auto &x : v) {
+x *= 2;
+}
+
+for (auto it = v.begin(); it != v.end(); ++it) {
+std::cout << *it;
+}
+
+for (auto it = v.rbegin(); it != v.rend(); ++it) {
+std::cout << *it;
+}
+
+===============================================================================
+ALGORITHMES COURANTS                                *cpp_vector-algo*
+
+std::sort(v.begin(), v.end());
+
+std::find(v.begin(), v.end(), 42);
+
+std::count(v.begin(), v.end(), 0);
+
+std::accumulate(v.begin(), v.end(), 0);
+
+v.erase(std::remove(v.begin(), v.end(), 0), v.end());
+
+===============================================================================
+COPIE / DEPLACEMENT                                 *cpp_vector-copy*
+
+vector<int> a = v;          // copie
+vector<int> b(std::move(v));
+v = b;                      // affectation
+
+===============================================================================
+PASSAGE EN PARAMETRE                               *cpp_vector-param*
+
+void f(const vector<int>& v);   // lecture seule
+void f(vector<int>& v);         // modification
+void f(vector<int> v);          // copie
+
+===============================================================================
+CONVERSION / INTEROP                               *cpp_vector-conv*
+
+int* p = v.data();
+
+vector<char> buf(str.begin(), str.end());
+
+===============================================================================
+ERREURS COURANTES                                  *cpp_vector-pitfalls*
+
+* accès hors limites avec operator[]
+* oublier reserve() dans les grosses boucles
+* invalider les itérateurs après insert/erase
+* erase sans remove
+
+===============================================================================
+VOIR AUSSI                                         *cpp_vector-see*
+
+|cpp_array|
+|cpp_string|
+|cpp_algorithm|
+
+===============================================================================
+

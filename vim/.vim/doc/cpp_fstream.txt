@@ -1,0 +1,134 @@
+*cpp_fstream.txt*    Aide-mémoire C++ : <fstream>
+
+===============================================================================
+CPP FSTREAM — AIDE MÉMOIRE                          *cpp_fstream*
+
+Objectif : rappel rapide de la syntaxe des flux fichiers C++.
+Lecture, écriture, modes, patterns usuels. Pas d'explications théoriques.
+
+===============================================================================
+INCLUDE & NAMESPACE                                 *cpp_fstream-include*
+
+#include <fstream>
+#include <string>
+
+using std::ifstream;
+using std::ofstream;
+using std::fstream;
+using std::string;
+
+===============================================================================
+TYPES DE FLUX                                      *cpp_fstream-types*
+
+ifstream   // lecture
+ofstream   // écriture
+fstream    // lecture + écriture
+
+===============================================================================
+OUVERTURE DE FICHIER                               *cpp_fstream-open*
+
+ifstream in("file.txt");
+ofstream out("file.txt");
+
+fstream io("file.txt", std::ios::in | std::ios::out);
+
+// ouverture différée
+ifstream in;
+in.open("file.txt");
+
+===============================================================================
+MODES D'OUVERTURE                                  *cpp_fstream-modes*
+
+std::ios::in        // lecture
+std::ios::out       // écriture
+std::ios::app       // append
+std::ios::ate       // curseur à la fin
+std::ios::trunc     // tronque
+std::ios::binary    // binaire
+
+ofstream out("file.txt", std::ios::out | std::ios::app);
+
+===============================================================================
+VERIFICATIONS                                      *cpp_fstream-check*
+
+in.is_open();
+
+if (in) {}
+if (!in.fail()) {}
+
+===============================================================================
+LECTURE TEXTE                                     *cpp_fstream-read*
+
+string s;
+
+in >> s;                      // mot (whitespace)
+
+std::getline(in, s);          // ligne
+
+while (std::getline(in, s)) {
+}
+
+===============================================================================
+ECRITURE TEXTE                                    *cpp_fstream-write*
+
+out << "hello" << '\n';
+out << s;
+
+===============================================================================
+LECTURE BINAIRE                                   *cpp_fstream-read-bin*
+
+struct Data { int a; double b; } d;
+
+in.read(reinterpret_cast<char*>(&d), sizeof(d));
+
+===============================================================================
+ECRITURE BINAIRE                                  *cpp_fstream-write-bin*
+
+out.write(reinterpret_cast<const char*>(&d), sizeof(d));
+
+===============================================================================
+POSITION DU CURSEUR                               *cpp_fstream-seek*
+
+in.tellg();
+out.tellp();
+
+in.seekg(0);
+out.seekp(0, std::ios::end);
+
+===============================================================================
+FLUSH / FERMETURE                                 *cpp_fstream-close*
+
+out.flush();
+
+in.close();
+out.close();
+
+===============================================================================
+PATTERNS COURANTS                                 *cpp_fstream-patterns*
+
+// RAII implicite
+{
+ofstream out("file.txt");
+out << "data";
+} // close automatique
+
+// lecture complète
+string content((std::istreambuf_iterator<char>(in)),
+std::istreambuf_iterator<char>());
+
+===============================================================================
+ERREURS COURANTES                                 *cpp_fstream-pitfalls*
+
+* oublier std::ios::binary sous Windows
+* mélanger >> et getline sans gérer '\n'
+* ne pas vérifier l'état du flux
+* écrire des structs non POD en binaire
+
+===============================================================================
+VOIR AUSSI                                        *cpp_fstream-see*
+
+|cpp_string|
+|cpp_vector|
+
+===============================================================================
+

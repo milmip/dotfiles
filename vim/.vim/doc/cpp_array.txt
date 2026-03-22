@@ -1,0 +1,114 @@
+*cpp_array.txt*    Aide-mémoire C++ : std::array
+
+===============================================================================
+CPP ARRAY — AIDE MÉMOIRE                            *cpp_array*
+
+Objectif : rappel rapide de la syntaxe std::array. Usage statique, taille connue
+à la compilation. Pas d'explications théoriques.
+
+===============================================================================
+INCLUDE & NAMESPACE                                 *cpp_array-include*
+
+#include <array>
+#include <algorithm>
+#include <numeric>
+#include <iostream>
+
+using std::array;
+
+===============================================================================
+DECLARATIONS                                       *cpp_array-decl*
+
+array<int, 3> a;                     // non initialisé
+array<int, 3> a{};                   // zéro-initialisé
+array<int, 3> a = {1, 2, 3};
+array<int, 3> a{1, 2, 3};
+
+array<array<int, 4>, 3> m{};          // matrice 3x4
+
+===============================================================================
+TAILLE                                             *cpp_array-size*
+
+a.size();        // constexpr
+
+===============================================================================
+ACCES AUX ELEMENTS                                 *cpp_array-access*
+
+a[i];            // pas de vérification
+a.at(i);         // vérifie les bornes
+a.front();
+a.back();
+a.data();        // pointeur brut
+
+===============================================================================
+AFFECTATION / MODIFICATION                         *cpp_array-modify*
+
+a.fill(0);               // tous les éléments
+
+a = {4, 5, 6};            // réaffectation complète
+
+===============================================================================
+ITERATION                                          *cpp_array-iter*
+
+for (size_t i = 0; i < a.size(); ++i) {
+std::cout << a[i];
+}
+
+for (int x : a) {
+std::cout << x;
+}
+
+for (auto &x : a) {
+x *= 2;
+}
+
+for (auto it = a.begin(); it != a.end(); ++it) {
+std::cout << *it;
+}
+
+for (auto it = a.rbegin(); it != a.rend(); ++it) {
+std::cout << *it;
+}
+
+===============================================================================
+ALGORITHMES COURANTS                                *cpp_array-algo*
+
+std::sort(a.begin(), a.end());
+
+std::find(a.begin(), a.end(), 42);
+
+std::count(a.begin(), a.end(), 0);
+
+std::accumulate(a.begin(), a.end(), 0);
+
+===============================================================================
+PASSAGE EN PARAMETRE                               *cpp_array-param*
+
+void f(const array<int, 3>& a);   // lecture seule
+void f(array<int, 3>& a);         // modification
+void f(array<int, 3> a);          // copie
+
+// template générique
+template <size_t N>
+void f(const array<int, N>& a);
+
+===============================================================================
+CONVERSION / INTEROP                               *cpp_array-conv*
+
+int* p = a.data();
+
+===============================================================================
+ERREURS COURANTES                                  *cpp_array-pitfalls*
+
+* taille fixée à la compilation
+* copie par valeur parfois involontaire
+* confusion avec C-array
+
+===============================================================================
+VOIR AUSSI                                         *cpp_array-see*
+
+|cpp_vector|
+|cpp_string|
+
+===============================================================================
+

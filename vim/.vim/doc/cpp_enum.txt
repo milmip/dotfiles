@@ -1,0 +1,114 @@
+*cpp_enum.txt*    Aide-mémoire C++ : enum / enum class
+
+===============================================================================
+CPP ENUM — AIDE MÉMOIRE                             *cpp_enum*
+
+Objectif : rappel rapide de la syntaxe enum et enum class.
+Valeurs, conversions, patterns usuels. Pas d'explications théoriques.
+
+===============================================================================
+ENUM CLASSIQUE                                     *cpp_enum-plain*
+
+enum Color {
+Red,
+Green,
+Blue
+};
+
+Color c = Red;
+int x = Red;           // conversion implicite
+
+===============================================================================
+ENUM CLASS (FORTEMENT TYPE)                        *cpp_enum-class*
+
+enum class Color {
+Red,
+Green,
+Blue
+};
+
+Color c = Color::Red;
+// int x = Color::Red; // interdit
+
+===============================================================================
+ENUM AVEC TYPE SOUS-JACENT                         *cpp_enum-underlying*
+
+enum class Error : int {
+Ok = 0,
+Fail = -1
+};
+
+===============================================================================
+CONVERSION                                        *cpp_enum-conv*
+
+int x = static_cast<int>(Color::Red);
+
+===============================================================================
+COMPARAISON                                       *cpp_enum-compare*
+
+Color a = Color::Red;
+Color b = Color::Green;
+
+a == b;
+
+===============================================================================
+ENUM FLAGS                                        *cpp_enum-flags*
+
+enum class Mode : unsigned {
+None = 0,
+Read = 1 << 0,
+Write = 1 << 1
+};
+
+inline Mode operator|(Mode a, Mode b) {
+return static_cast<Mode>(
+static_cast<unsigned>(a) | static_cast<unsigned>(b));
+}
+
+Mode m = Mode::Read | Mode::Write;
+
+===============================================================================
+SWITCH                                            *cpp_enum-switch*
+
+switch (c) {
+case Color::Red:
+break;
+case Color::Green:
+break;
+default:
+break;
+}
+
+===============================================================================
+ENUM DANS STRUCT                                   *cpp_enum-struct*
+
+struct S {
+enum class State { Idle, Run } state;
+};
+
+===============================================================================
+ENUM TO STRING (PATTERN)                           *cpp_enum-string*
+
+const char* to_string(Color c) {
+switch (c) {
+case Color::Red:   return "Red";
+case Color::Green: return "Green";
+default:           return "?";
+}
+}
+
+===============================================================================
+ERREURS COURANTES                                  *cpp_enum-pitfalls*
+
+* utiliser enum au lieu de enum class
+* conversions implicites non désirées
+* oublier le type sous-jacent pour API/binaire
+
+===============================================================================
+VOIR AUSSI                                         *cpp_enum-see*
+
+|cpp_struct|
+|cpp_switch|
+
+===============================================================================
+

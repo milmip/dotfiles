@@ -1,0 +1,148 @@
+*cpp_exceptions.txt*    Aide-mémoire C++ : exceptions
+
+===============================================================================
+CPP EXCEPTIONS — AIDE MÉMOIRE                       *cpp_exceptions*
+
+Objectif : rappel rapide de la syntaxe et des patterns liés aux exceptions C++.
+throw, try/catch, exceptions standard, bonnes pratiques. Pas de théorie.
+
+===============================================================================
+INCLUDE                                             *cpp_exceptions-include*
+
+#include <exception>
+#include <stdexcept>
+#include <string>
+
+using std::exception;
+using std::runtime_error;
+using std::logic_error;
+using std::string;
+
+===============================================================================
+LEVEE D'EXCEPTION                                  *cpp_exceptions-throw*
+
+throw exception();
+throw runtime_error("error");
+throw logic_error("invalid state");
+
+throw std::out_of_range("index");
+throw std::invalid_argument("arg");
+
+===============================================================================
+TRY / CATCH                                        *cpp_exceptions-try*
+
+try {
+f();
+}
+catch (const std::out_of_range& e) {
+}
+catch (const std::exception& e) {
+}
+catch (...) {
+}
+
+===============================================================================
+ORDRE DES CATCH                                    *cpp_exceptions-order*
+
+catch (const derived& e);      // d'abord spécifique
+catch (const base& e);         // ensuite générique
+catch (...);
+
+===============================================================================
+RECUPERATION MESSAGE                               *cpp_exceptions-what*
+
+catch (const std::exception& e) {
+e.what();                  // const char*
+}
+
+===============================================================================
+EXCEPTIONS STANDARD                                *cpp_exceptions-std*
+
+std::exception
+std::runtime_error
+std::logic_error
+
+std::out_of_range
+std::invalid_argument
+std::length_error
+std::overflow_error
+std::underflow_error
+
+===============================================================================
+EXCEPTION PERSONNALISEE                             *cpp_exceptions-custom*
+
+struct my_error : std::runtime_error {
+using std::runtime_error::runtime_error;
+};
+
+throw my_error("fail");
+
+===============================================================================
+NOEXCEPT                                           *cpp_exceptions-noexcept*
+
+void f() noexcept;
+
+void g() noexcept(true);
+void h() noexcept(false);
+
+noexcept(expr);        // bool compile-time
+
+===============================================================================
+PROPAGATION                                        *cpp_exceptions-propag*
+
+void f() {
+g();               // propage automatiquement
+}
+
+try {
+f();
+}
+catch (...) {
+throw;             // relance
+}
+
+===============================================================================
+CONSTRUCTEURS / DESTRUCTEURS                        *cpp_exceptions-ctor*
+
+// constructeur : OK
+MyClass() {
+if (fail) throw runtime_error("err");
+}
+
+// destructeur : NE PAS throw
+~MyClass() noexcept;
+
+===============================================================================
+PATTERNS COURANTS                                  *cpp_exceptions-patterns*
+
+// guard
+if (!ok) throw runtime_error("bad");
+
+// conversion erreur -> exception
+if (err != 0) throw std::system_error(err, std::system_category());
+
+===============================================================================
+INTERACTION STL                                    *cpp_exceptions-stl*
+
+v.at(i);            // throw out_of_range
+s.at(i);
+
+new T;              // throw bad_alloc
+
+===============================================================================
+ERREURS COURANTES                                  *cpp_exceptions-pitfalls*
+
+* throw dans un destructeur
+* attraper par valeur (slice)
+* catch trop générique trop tôt
+* utiliser exceptions pour le flux normal
+
+===============================================================================
+VOIR AUSSI                                         *cpp_exceptions-see*
+
+|cpp_raii|
+|cpp_error_handling|
+|cpp_optional_expected|
+
+===============================================================================
+

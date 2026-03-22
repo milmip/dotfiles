@@ -1,0 +1,118 @@
+*cpp_struct.txt*    Aide-mémoire C++ : struct
+
+===============================================================================
+CPP STRUCT — AIDE MÉMOIRE                           *cpp_struct*
+
+Objectif : rappel rapide de la syntaxe des struct C++.
+Déclaration, initialisation, usage courant. Pas d'explications théoriques.
+
+===============================================================================
+DECLARATION                                        *cpp_struct-decl*
+
+struct S {
+int a;
+double b;
+};
+
+struct S s;
+
+===============================================================================
+INITIALISATION                                     *cpp_struct-init*
+
+S s{1, 2.5};               // agrégat
+S s = {1, 2.5};
+
+S s{};                     // zero-init
+
+===============================================================================
+MEMBRES PAR DEFAUT                                *cpp_struct-default*
+
+struct S {
+int a = 0;
+double b = 1.0;
+};
+
+===============================================================================
+ACCES AUX MEMBRES                                 *cpp_struct-access*
+
+s.a = 3;
+s.b = 4.2;
+
+S* p = &s;
+p->a = 1;
+
+===============================================================================
+CONSTRUCTEURS                                     *cpp_struct-ctor*
+
+struct S {
+int a;
+S(int x) : a(x) {}
+};
+
+S s(5);
+
+===============================================================================
+STRUCT VS CLASS                                   *cpp_struct-vs-class*
+
+struct S { int x; };      // membres publics par défaut
+class  C { int x; };      // membres privés par défaut
+
+===============================================================================
+METHODES                                          *cpp_struct-methods*
+
+struct S {
+int a;
+void inc() { ++a; }
+int get() const { return a; }
+};
+
+===============================================================================
+OPERATEURS                                        *cpp_struct-ops*
+
+struct S { int a; };
+
+bool operator==(const S& x, const S& y) {
+return x.a == y.a;
+}
+
+===============================================================================
+STRUCT AGREGAT                                    *cpp_struct-aggregate*
+
+struct A {
+int x;
+double y;
+};
+
+A a{1, 2.0};
+
+===============================================================================
+STRUCT IMBRIQUEE                                  *cpp_struct-nested*
+
+struct Outer {
+struct Inner {
+int x;
+} in;
+};
+
+===============================================================================
+PASSAGE EN PARAMETRE                              *cpp_struct-param*
+
+void f(const S& s);   // lecture
+void f(S& s);         // modif
+void f(S s);          // copie
+
+===============================================================================
+ERREURS COURANTES                                 *cpp_struct-pitfalls*
+
+* oublier const sur les méthodes
+* copies involontaires
+* confusion POD / non-POD
+
+===============================================================================
+VOIR AUSSI                                        *cpp_struct-see*
+
+|cpp_exceptions|
+|cpp_enum|
+
+===============================================================================
+

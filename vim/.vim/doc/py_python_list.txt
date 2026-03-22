@@ -1,0 +1,118 @@
+*py_python_list.txt*    Aide-mémoire Python : list
+
+===============================================================================
+PYTHON LIST — AIDE MÉMOIRE                           *py_python_list*
+
+Objectif : rappel rapide de la syntaxe et des patterns Python list.
+Création, accès, modifications, slices, comprehension. Pas d'explications théoriques.
+
+===============================================================================
+CREATION                                           *py_python_list-create*
+
+l = []
+l = list()
+l = [1, 2, 3]
+l = list(range(5))
+l = [0]*5
+
+===============================================================================
+TYPE & LONGUEUR                                   *py_python_list-type*
+
+type(l)
+len(l)
+
+===============================================================================
+INDEXATION / SLICING                               *py_python_list-index*
+
+l[0]
+l[-1]
+l[1:3]
+l[:3]
+l[::2]
+
+===============================================================================
+AJOUT / SUPPRESSION                               *py_python_list-modify*
+
+l.append(5)
+l.extend([6, 7])
+l.insert(1, 9)
+l.remove(3)
+l.pop()       # dernier
+l.pop(0)      # index
+l.clear()
+
+===============================================================================
+RECHERCHE                                         *py_python_list-search*
+
+3 in l
+l.index(3)       # first occurrence
+l.count(3)
+
+===============================================================================
+TRI / INVERSER                                    *py_python_list-sort*
+
+l.sort()         # inplace
+l.sort(reverse=True)
+sorted(l)        # retourne nouveau
+l.reverse()
+
+===============================================================================
+ITERATION                                         *py_python_list-iter*
+
+for x in l:
+pass
+
+for i, x in enumerate(l):
+pass
+
+===============================================================================
+COMPREHENSIONS                                     *py_python_list-comp*
+
+[x*2 for x in l]
+[x for x in l if x>0]
+[(i, x) for i, x in enumerate(l)]
+
+===============================================================================
+COPIE / VUE                                      *py_python_list-copy*
+
+b = l            # même objet
+b = l.copy()     # copie superficielle
+b = list(l)
+import copy
+b = copy.deepcopy(l)  # copie profonde
+
+===============================================================================
+OPERATIONS ENSEMBLE                                *py_python_list-set*
+
+set(l)           # unique
+list(set(l))
+
+===============================================================================
+CONCATENATION / REPETITION                        *py_python_list-concat*
+
+l + [4, 5]
+l * 3
+
+===============================================================================
+LISTES IMBRIQUEES                                  *py_python_list-nested*
+
+l2d = [[1,2],[3,4]]
+l2d[0][1]
+
+===============================================================================
+ERREURS COURANTES                                 *py_python_list-pitfalls*
+
+* copier par référence au lieu de copy()
+* slice mal compris (l[1:3])
+* modifier une liste pendant l'itération
+* compréhension qui crée de la liste inutilement pour gros volumes
+
+===============================================================================
+VOIR AUSSI                                        *py_python_list-see*
+
+|py_numpy_array|
+|py_python_dict|
+|py_python_comprehension|
+
+===============================================================================
+

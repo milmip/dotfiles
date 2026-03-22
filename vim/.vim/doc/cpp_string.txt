@@ -1,0 +1,156 @@
+*cpp_string.txt*    Aide-mémoire C++ : std::string
+
+===============================================================================
+CPP STRING — AIDE MÉMOIRE                           *cpp_string*
+
+Objectif : rappel rapide de la syntaxe std::string. Manipulation, recherche,
+conversion. Pas d'explications théoriques.
+
+===============================================================================
+INCLUDE & NAMESPACE                                 *cpp_string-include*
+
+#include <string>
+#include <iostream>
+#include <sstream>
+#include <algorithm>
+
+using std::string;
+
+===============================================================================
+DECLARATIONS                                       *cpp_string-decl*
+
+string s;                         // vide
+string s("abc");                  // depuis littéral
+string s = "abc";
+string s(5, 'x');                 // "xxxxx"
+string s2 = s;                    // copie
+string s3 = std::move(s);         // move
+
+string s = R"(texte brut \n \t)"; // raw string
+
+===============================================================================
+TAILLE & CAPACITE                                  *cpp_string-size*
+
+s.size();
+s.length();
+s.empty();
+s.capacity();
+s.reserve(100);
+s.clear();
+
+===============================================================================
+ACCES AUX CARACTERES                               *cpp_string-access*
+
+s[i];            // pas de vérification
+s.at(i);         // vérifie les bornes
+s.front();
+s.back();
+s.data();        // C++17+
+s.c_str();       // const char*
+
+===============================================================================
+CONCATENATION                                      *cpp_string-concat*
+
+s += "def";
+s = s + "def";
+
+s.append("def");
+s.append(3, '!');
+
+===============================================================================
+MODIFICATION                                       *cpp_string-modify*
+
+s.push_back('a');
+s.pop_back();
+
+s.insert(2, "XYZ");
+s.erase(2, 3);
+s.replace(2, 3, "abc");
+
+===============================================================================
+SOUS-CHAINES                                       *cpp_string-sub*
+
+s.substr(2);           // depuis 2
+s.substr(2, 3);        // longueur 3
+
+===============================================================================
+RECHERCHE                                          *cpp_string-find*
+
+s.find("abc");
+s.rfind("abc");
+s.find_first_of("aeiou");
+s.find_last_of("0123456789");
+
+if (s.find("abc") != string::npos) {}
+
+===============================================================================
+ITERATION                                          *cpp_string-iter*
+
+for (size_t i = 0; i < s.size(); ++i) {
+std::cout << s[i];
+}
+
+for (char c : s) {
+std::cout << c;
+}
+
+for (auto &c : s) {
+c = std::toupper(c);
+}
+
+===============================================================================
+COMPARAISON                                        *cpp_string-compare*
+
+s == "abc";
+s != "abc";
+s < t;                // lexicographique
+
+s.compare(t);          // <0 ==0 >0
+
+===============================================================================
+CONVERSIONS                                        *cpp_string-conv*
+
+int i = std::stoi(s);
+long l = std::stol(s);
+double d = std::stod(s);
+
+string s = std::to_string(42);
+
+// string <-> stream
+std::stringstream ss;
+ss << 42 << " " << 3.14;
+string s = ss.str();
+
+===============================================================================
+INTEROP C                                          *cpp_string-c*
+
+const char* p = s.c_str();
+char* q = s.data();        // C++17+, modifiable
+
+string s(p);               // depuis char*
+
+===============================================================================
+ALGORITHMES COURANTS                                *cpp_string-algo*
+
+std::reverse(s.begin(), s.end());
+
+std::count(s.begin(), s.end(), 'a');
+
+std::transform(s.begin(), s.end(), s.begin(), ::tolower);
+
+===============================================================================
+ERREURS COURANTES                                  *cpp_string-pitfalls*
+
+* conserver c_str() après modification
+* confusion taille / capacité
+* UTF-8 ≠ 1 char = 1 byte
+* accès hors limites avec operator[]
+
+===============================================================================
+VOIR AUSSI                                         *cpp_string-see*
+
+|cpp_vector|
+|cpp_array|
+
+===============================================================================
+

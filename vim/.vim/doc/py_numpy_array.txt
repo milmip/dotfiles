@@ -1,0 +1,167 @@
+*py_numpy_array.txt*    Aide-mémoire Python : numpy.ndarray
+
+===============================================================================
+PY NUMPY ARRAY — AIDE MÉMOIRE                      *py_numpy_array*
+
+Objectif : rappel rapide de la syntaxe NumPy pour les tableaux.
+Création, accès, opérations, patterns usuels. Pas d'explications pédagogiques.
+
+Convention : import numpy as np
+
+===============================================================================
+IMPORT                                             *py_numpy_array-import*
+
+import numpy as np
+
+===============================================================================
+CREATION                                           *py_numpy_array-create*
+
+np.array([1, 2, 3])
+np.array([[1, 2], [3, 4]])
+
+np.genfromtxt('file.csv', delimiter=',')
+
+np.zeros(5)
+np.ones((3, 4))
+np.empty((2, 2))
+
+np.arange(10)
+np.arange(0, 10, 2)
+
+np.linspace(0, 1, 5)
+
+np.eye(3)                 # matrice identité
+np.diag([1, 2, 3])
+
+===============================================================================
+TYPE & SHAPE                                      *py_numpy_array-shape*
+
+a.shape
+a.ndim
+a.size
+a.dtype
+
+a.astype(np.float64)
+
+===============================================================================
+INDEXATION / SLICING                               *py_numpy_array-index*
+
+a[i]
+a[i, j]
+a[-1]
+
+a[1:4]
+a[:, 0]
+a[::2]
+
+===============================================================================
+COPIE / VUE                                       *py_numpy_array-copy*
+
+b = a            # vue
+b = a.view()     # vue
+b = a.copy()     # copie
+
+===============================================================================
+RESHAPE                                            *py_numpy_array-reshape*
+
+a.reshape(2, 3)
+a.reshape(-1, 1)
+a.ravel()        # vue si possible
+a.flatten()      # copie
+
+a.T            # transpose
+
+===============================================================================
+OPERATIONS ELEMENT-WISE                            *py_numpy_array-ops*
+
+a + 1
+a * 2
+a + b
+a * b
+
+np.sqrt(a)
+np.exp(a)
+np.log(a)
+
+===============================================================================
+REDUCTIONS                                        *py_numpy_array-reduce*
+
+a.sum()
+a.mean()
+a.min()
+a.max()
+
+a.sum(axis=0)
+a.sum(axis=1)
+
+===============================================================================
+LOGIQUE / MASQUES                                 *py_numpy_array-mask*
+
+a > 0
+
+mask = (a > 0)
+a[mask]
+
+a[a % 2 == 0]
+
+===============================================================================
+BROADCASTING                                      *py_numpy_array-broadcast*
+
+a + np.array([1, 2, 3])
+
+a + np.array([[1], [2], [3]])
+
+===============================================================================
+ITERATION                                         *py_numpy_array-iter*
+
+for x in a:
+pass
+
+for x in np.nditer(a):
+pass
+
+===============================================================================
+STACK / CONCAT                                    *py_numpy_array-stack*
+
+np.concatenate([a, b])
+np.stack([a, b])
+
+np.vstack([a, b])
+np.hstack([a, b])
+
+===============================================================================
+IO SIMPLE                                         *py_numpy_array-io*
+
+np.save("a.npy", a)
+a = np.load("a.npy")
+
+np.savetxt("a.txt", a)
+a = np.loadtxt("a.txt")
+
+===============================================================================
+ALGORITHMES COURANTS                               *py_numpy_array-algo*
+
+np.sort(a)
+np.argsort(a)
+
+np.unique(a)
+
+np.where(a > 0)
+
+===============================================================================
+ERREURS COURANTES                                 *py_numpy_array-pitfalls*
+
+* confondre vue et copie
+* oublier l'axis dans les réductions
+* itérer en Python au lieu de vectoriser
+* dtype implicite non souhaité
+
+===============================================================================
+VOIR AUSSI                                        *py_numpy_array-see*
+
+|py_numpy_random|
+|py_numpy_linalg|
+|py_python_list|
+
+===============================================================================
+

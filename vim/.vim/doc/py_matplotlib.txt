@@ -1,0 +1,20 @@
+*py_matplotlib.txt*    Aide-mémoire Python : matplotlib.pyplot
+
+===============================================================================
+PY MATPLOTLIB — AIDE MÉMOIRE                      *py_matplotlib*
+
+import matplotlib.pyplot as plt
+
+
+
+===============================================================================
+OBJETS PRINCIPAUX                                  *py_numpy_array*
+
+Figure (fig)   ← Conteneur global pour tout le graphique
+ ├─ Axes (ax)   ← Zone de tracé individuelle
+ │    ├─ Axis X/Y   ← Gère les graduations, labels, échelle
+ │    ├─ Line2D / Patch / BarContainer …   ← Les éléments dessinés (lignes, barres, points)
+ │    ├─ Text / Annotation   ← Titres, étiquettes, légendes internes
+ │    └─ Legend   ← Légendes associées à cet Axes
+ └─ Text / Supertitle / Legend   ← Éléments globaux de la Figure
+
