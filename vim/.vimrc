@@ -170,6 +170,8 @@ nnoremap <c-f> yiwo<esc>p:silent exec '!drawing '.b:vimtex.root.'/figures/'.getl
 
 nnoremap <c-l> :VimtexCompile<cr>:VimtexView<cr>
 
+vnoremap <SPACE>p P
+
 vnoremap <c-y> y
 inoremap <c-v> <esc>"+pa
 

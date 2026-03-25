@@ -66,7 +66,7 @@ bindsym $mod+t exec alacritty
 bindsym $mod+q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec rofi -show combi
+bindsym $mod+d exec rofi -show run
 # A more modern dmenu replacement is rofi:
 # bindcode $mod+40 exec "rofi -modi drun,run -show drun"
 # There also is i3-dmenu-desktop which only displays applications shipping a
@@ -126,8 +126,13 @@ bindsym $mod+a focus parent
 # brigthness
 bindsym F2 exec brightnessctl set 10%-
 bindsym F3 exec brightnessctl set +10%
-#bindsym 232 exec xbacklight -dec 10
-#bindsym 232 exec xbacklight -dec 10
+
+#i3lock
+bindsym $mod+x exec ~/.config/i3lock/lock
+
+#shutdown
+bindsym $mod+Shift+F2 exec shutdown now
+
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
@@ -208,4 +213,6 @@ bindsym $mod+r mode "resize"
 
 client.focused   #fe8019 #fe8019 #00000f #ffffff
 client.unfocused #d5d5d5 #0a0a0a #ffffff #008000
+
+for_window [class="firefox_firefox"] move to workspace $ws3
 
