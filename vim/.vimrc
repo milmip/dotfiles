@@ -150,6 +150,7 @@ nnoremap S :q<cr>
 nnoremap QQQQ :q!<cr>
 
 " copy to clipboard (must have +clipboard option)
+vnoremap <c-c> "+y
 
 
 " --- configuration des tabulations ---
@@ -178,6 +179,7 @@ inoremap <c-v> <esc>"+pa
 vnoremap / y/<C-R>=escape(@",'/\')<CR>
 
 nnoremap <c-b> :Buffers<CR>
+nnoremap <CR> :Files<CR>
 nnoremap <c-h> :hide edit 
 
 cnoreabbrev ctag exec '!ctags -R ./'
