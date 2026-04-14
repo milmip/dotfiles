@@ -51,8 +51,8 @@
   esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12        del  home end   pgup pgdn
   @numb  1    2    3    4    5    6    7    8    9    0    -    =    bspc       nlck kp/  kp*  kp-
   tab  q    w    e    r    t    z    u    i    o    p    [    ]    \          kp7  kp8  kp9  kp+
-  esc a    s    d    f    g    h    j    k    l    @supermaj    '         ret        kp4  kp5  kp6
-  lsft y    x    c    v    b    n    m    ,    .    ;    rsft up              kp1  kp2  kp3  kprt
+  esc a    s    d    f    g    h    j    k    l    @supermaj    ;         ret        kp4  kp5  kp6
+  lsft y    x    c    v    b    n    m    ,    .    '    rsft up              kp1  kp2  kp3  kprt
   lctl lmet @navapp           spc                 ralt 102d left down rght       kp0  kp.
 )
 
@@ -68,10 +68,10 @@
 (deflayer majbase
   XX  XX  XX    XX   XX   XX   XX   XX    XX    XX    XX    XX   XX    XX        XX  XX  XX  XX
   XX  XX  XX    XX   XX   XX   XX   XX    XX    XX    XX    XX   XX    XX        XX  XX  XX  XX
-  XX  XX  XX    XX   @d   XX   XX   @u    @i    XX    XX    XX   XX    XX        XX  XX  XX  XX
-  XX  XX  XX    XX   @f   @g   @h   @j    @k    @k    XX    XX        XX        XX  XX  XX
+  XX  @q  @w    XX   @d   XX   XX   @u    @i    XX    XX    XX   XX    XX        XX  XX  XX  XX
+  XX  @a  @s    XX   @f   @g   @h   @j    @k    @k    XX    XX        XX        XX  XX  XX
   XX  XX  XX    @c   @v   XX   @n   @m    XX    XX    XX    XX  XX              XX  XX  XX  XX
-  XX  XX  XX           XX             XX    XX          XX XX XX            XX  XX 
+  XX  XX  XX           spc             XX    XX          XX XX XX            XX  XX 
 )
 
 (deflayer quick_num
@@ -96,6 +96,10 @@
   f /
   c 102d
   v (around lsft 102d)
+  q (around lsft 1)
+  w (around lsft 3)
+  a (around lsft 2)
+  s (around lsft 6)
 
 )
 
