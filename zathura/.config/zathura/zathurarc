@@ -1,2 +1,4 @@
 map S quit
 set selection-clipboard clipboard
+map w exec "/home/skip/.config/zathura/split.sh '$FILE' '$PAGE'"
+
