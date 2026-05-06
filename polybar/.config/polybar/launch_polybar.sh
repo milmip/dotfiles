@@ -5,3 +5,6 @@ if type "xrandr"; then
 else
   polybar --config='~/.config/polybar/config.ini' --reload main &
 fi
+
+sleep 2
+killall polybar

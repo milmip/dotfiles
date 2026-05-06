@@ -16,9 +16,8 @@ set $mod Mod4
 exec_always --no-startup-id picom 
 exec_always --no-startup-id redshift -x
 exec_always --no-startup-id redshift -O 3700
-exec_always --no-startup-id killall polybar
-exec_always --no-startup-id killall polybar
-exec_always --no-startup-id ~/.config/polybar/launch_polybar.sh
+#exec_always --no-startup-id killall polybar
+#exec_always --no-startup-id ~/.config/polybar/launch_polybar.sh
 exec_always feh --bg-scale ~/.config/background/youvecomethisfar.png
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -44,6 +43,8 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
+
+exec --no-startup-id battery_check
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -78,12 +79,6 @@ bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
-
-# alternatively, you can use the cursor keys:
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
 
 # move focused window
 bindsym $mod+Shift+h move left
@@ -130,6 +125,9 @@ bindsym F3 exec brightnessctl set +2%
 #sceenshot
 bindsym Print exec --no-startup-id maim --format=png --select "/home/skip/Images/screenshot/$(date -u +'%Y%m%d-%H%M%SZ').png"
 bindsym Shift+Print exec --no-startup-id maim --format=png "/home/skip/Images/screenshot/$(date -u +'%Y%m%d-%H%M%SZ').png"
+
+#polybar
+bindsym $mod+p exec --no-startup-id ~/.config/polybar/launch_polybar.sh
 
 #i3lock
 bindsym $mod+x exec ~/.config/i3lock/lock
@@ -209,6 +207,12 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left  mode "resize" resize grow width 10 px or 10 ppt mode "default"
+bindsym $mod+Right mode "resize" resize shrink width 10 px or 10 ppt mode "default"
+bindsym $mod+Up mode "resize" resize grow height 10 px or 10 ppt mode "default"
+bindsym $mod+Down   mode "resize" resize shrink height 10 px or 10 ppt mode "default"
+
 ## Start i3bar to display a workspace bar (plus the system information i3status
 ## finds out, if available)
 #bar {
@@ -219,4 +223,5 @@ client.focused   #fe8019 #fe8019 #00000f #ffffff
 client.unfocused #d5d5d5 #0a0a0a #ffffff #008000
 
 for_window [class="firefox"] move to workspace $ws3
+for_window [class="Zathura"] move to workspace $ws2
 
