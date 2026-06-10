@@ -7,7 +7,7 @@ TEXT='#fe8019E6'
 WRONG='#282828bb'
 VERIFYING='#1d2021E6'
 
-i3lock \
+i3lock 
 --insidever-color=$CLEAR     \
 --ringver-color=$VERIFYING   \
 \

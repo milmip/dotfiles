@@ -103,6 +103,9 @@ cpp_vector-pitfalls	cpp_vector.txt	/*cpp_vector-pitfalls*
 cpp_vector-see	cpp_vector.txt	/*cpp_vector-see*
 cpp_vector-size	cpp_vector.txt	/*cpp_vector-size*
 cpp_vector.txt	cpp_vector.txt	/*cpp_vector.txt*
+py_matplotlib	py_matplotlib.txt	/*py_matplotlib*
+py_matplotlib.txt	py_matplotlib.txt	/*py_matplotlib.txt*
+py_numpy_array	py_matplotlib.txt	/*py_numpy_array*
 py_numpy_array	py_numpy_array.txt	/*py_numpy_array*
 py_numpy_array-algo	py_numpy_array.txt	/*py_numpy_array-algo*
 py_numpy_array-broadcast	py_numpy_array.txt	/*py_numpy_array-broadcast*

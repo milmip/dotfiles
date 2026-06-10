@@ -71,6 +71,12 @@ endif
 call plug#begin('~/.vim/plugged')
 
    " list your plugins here
+  Plug 'tpope/vim-dadbod'
+  	let g:db = 'sqlite:' . expand('~/code/anki/EmptyDeck/collection.anki2')
+  	let g:db = 'sqlite:' . expand('~/code/anki/GCSE/collection.anki2')
+  Plug 'kristijanhusak/vim-dadbod-ui'
+  Plug 'kristijanhusak/vim-dadbod-completion' "Optional
+
   Plug 'tpope/vim-sensible'
 
   Plug 'sirver/ultisnips'
