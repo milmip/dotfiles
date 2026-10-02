@@ -1,6 +1,28 @@
 global !p
 def math():
-	return vim.eval('vimtex#syntax#in_mathzone()') == '1'
+    tag_pairs = [
+        ('\\(', '\\)'),
+        ('\\[', '\\]')]
+
+    row, col = vim.current.window.cursor
+    buf = vim.current.buffer
+    lines_before = buf[:row-1] + [buf[row-1][:col]]
+    text = '\n'.join(lines_before)
+
+    last_pos = -1
+    last_is_open = False
+
+    for open_tag, close_tag in tag_pairs:
+        o = text.rfind(open_tag)
+        c = text.rfind(close_tag)
+        if o > last_pos:
+            last_pos = o
+            last_is_open = True
+        if c > last_pos:
+            last_pos = c
+            last_is_open = False
+
+    return vim.eval('vimtex#syntax#in_mathzone()') == '1' or last_is_open
 
 def comment(): 
 	return vim.eval('vimtex#syntax#in_comment()') == '1'
@@ -529,6 +551,16 @@ snippet nabl "nabla" iA
 endsnippet
 
 context "math()"
+snippet curl "curl" iwA
+\nabla\times 
+endsnippet
+
+context "math()"
+snippet div "div" iwA
+\nabla\cdot 
+endsnippet
+
+context "math()"
 snippet xx "cross" iA
 \times 
 endsnippet
@@ -659,7 +691,7 @@ snippet cc "subset" Ai
 endsnippet
 
 snippet notin "not in " iA
-\not\in 
+\notin 
 endsnippet
 
 context "math()"
@@ -751,7 +783,7 @@ endsnippet
 priority 10
 context "math()"
 snippet vec "vector in physics" iA
-\bf{$1}$0
+\vec{$1}$0
 endsnippet
 
 priority 10
@@ -1223,7 +1255,7 @@ endsnippet
 #endsnippet
 #
 #context "math()"
-#snippet "(\s)\\(alpha|beta|gamma|delta|epsilon|zeta|eta|theta|iota|kappa|lambda|mu|nu|xi|omicron|pi|rho|sigma|tau|upsilon|phi|chi|psi|omega|Alpha|Beta|Gamma|Delta|Epsilon|Zeta|Eta|Theta|Iota|Kappa|Lambda|Mu|Nu|Xi|Omicron|Pi|Rho|Sigma|Tau|Upsilon|Phi|Chi|Psi|Omega|cos|sin|tan|log)" "Wrap Greek letter in parentheses" r
+#snippet "(\s)\\(alpha|beta|gamma|delta|epsilon|zeta|eta|theta|iota|kappa|lambda|mu|nu|xi|omicron|pi|rho|sigma|tau|upsilon|phi|chi|psi|omega|Alpha|Beta|Gamma|Delta|Epsilon|Zeta|Eta|Theta|Iota|Kappa|Lambda|Mu|Nu|Xi|Omicron|Pi|Rho|Sigma|Tau|Upsilon|Phi|Chi|Psi|Omega|cos|sin|tan|log|set)" "Wrap Greek letter in parentheses" r
 #`!p snip.rv = match.group(1) + '\\' + match.group(2)`(${1:x})$0
 #endsnippet
 
@@ -1283,11 +1315,15 @@ snippet abs "absolute value" iA
 endsnippet
 
 context "math()"
-snippet iint "interieur" iA
-\inte
+snippet iint "double integrale" iA
+\iint_{$1}$0
+endsnippet
+
+context "math()"
+snippet set "set" wA
+\set{$1}$0
 endsnippet
 
 # vim:ft=snippets
 
 #alpha|beta|gamma|delta|epsilon|zeta|eta|theta|iota|kappa|lambda|mu|nu|xi|omicron|pi|rho|sigma|tau|upsilon|phi|chi|psi|omega|Alpha|Beta|Gamma|Delta|Epsilon|Zeta|Eta|Theta|Iota|Kappa|Lambda|Mu|Nu|Xi|Omicron|Pi|Rho|Sigma|Tau|Upsilon|Phi|Chi|Psi|Omega
-

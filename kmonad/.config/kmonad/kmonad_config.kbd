@@ -68,8 +68,8 @@
 (deflayer majbase
   XX  XX  XX    XX   XX   XX   XX   XX    XX    XX    XX    XX   XX    XX        XX  XX  XX  XX
   XX  XX  XX    XX   XX   XX   XX   XX    XX    XX    XX    XX   XX    XX        XX  XX  XX  XX
-  XX  @q  @w    XX   @d   XX   XX   @u    @i    XX    XX    XX   XX    XX        XX  XX  XX  XX
-  XX  @a  @s    XX   @f   @g   @h   @j    @k    @k    XX    XX        XX        XX  XX  XX
+  XX  @q  @w    XX   @d   @t   XX   @u    @i    XX    XX    XX   XX    XX        XX  XX  XX  XX
+  XX  @a  XX    XX   @f   @g   @h   @j    @k    @k    XX    XX        XX        XX  XX  XX
   XX  XX  XX    @c   @v   XX   @n   @m    XX    XX    XX    XX  XX              XX  XX  XX  XX
   XX  XX  XX           spc             XX    XX          XX XX XX            XX  XX 
 )
@@ -99,7 +99,7 @@
   q (around lsft 1)
   w (around lsft 3)
   a (around lsft 2)
-  s (around lsft 6)
+  t (around lsft 6)
 
 )
 

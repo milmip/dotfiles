@@ -1,0 +1,88 @@
+
+priority 10000
+extends tex
+
+snippet mk "mathjax inline" iAw
+\( $1 \)$0
+endsnippet
+
+snippet dm "mathjax bloc" iAw
+\[
+$1
+\]$0
+endsnippet
+
+snippet br "newline" iAw
+<br>
+$0
+endsnippet
+
+snippet enum "Enumerate" bA
+<ol>
+	$0
+</ol>
+endsnippet
+
+snippet item "Itemize" bA
+<ul>
+	$0
+</ul>
+endsnippet
+
+snippet li "Puce" bw
+<li>$1</li>$0
+endsnippet
+
+snippet cli "Cloze puce" bw
+<li>{{c$1::$2}}</li>$0
+endsnippet
+
+snippet b "bold" w
+<b>$1</b>$0
+endsnippet
+
+snippet i "italic" w
+<i>$1</i>$0
+endsnippet
+
+snippet u "underline" w
+<u>$1</u>$0
+endsnippet
+
+snippet ? "Question" w
+<u><b>Question</b></u>
+<br>
+$0
+endsnippet
+
+snippet ? "Liste" w
+<u><b>Liste</b></u>
+<br>
+$0
+endsnippet
+
+snippet thmr "thmr - template anki" bA
+<u><b>Théorème</b> $1</u>
+<br>
+$0
+endsnippet
+
+snippet cont "cont - template anki" bA
+<i>Soit :</i>
+<ul>
+	$0
+</ul>
+<hr>
+endsnippet
+
+snippet hyp "hyp - template anki" bA
+<i>Supposons :</i>
+<ul>
+	$0
+</ul>
+<hr>
+endsnippet
+
+snippet vec "vector arrow" w
+\vec{$1} $0
+endsnippet

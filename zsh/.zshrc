@@ -70,11 +70,11 @@ alias gout='git checkout'
 alias gcm='git commit'
 alias gst='git status'
 alias gres='git restore ./'
-alias za='var=$(fdfind --exclude EPFL/archive | fzf --query="EPFL serie ") && zathura $var --log-level=error &'
-alias phy='var=$(ls /home/skip/Downloads/ | grep .pdf) && mv /home/skip/Downloads/*.pdf /home/skip/EPFL/Physique_II/series && zathura /home/skip/EPFL/Physique_II/series/$var &'
-alias ana='var=$(ls /home/skip/Downloads/ | grep .pdf) && mv /home/skip/Downloads/*.pdf /home/skip/EPFL/Analyse_II/series && zathura /home/skip/EPFL/Analyse_II/series/$var &'
-alias lin='var=$(ls /home/skip/Downloads/ | grep .pdf) && mv /home/skip/Downloads/*.pdf /home/skip/EPFL/Algebre_II/series && zathura /home/skip/EPFL/Algebre_II/series/$var &'
+alias za='var=$(fdfind --exclude EPFL/archive | fzf --query="EPFL ") && zathura $var --log-level=error &'
+alias phy='var=$(ls /home/skip/Downloads/ | grep .pdf) && mv /home/skip/Downloads/*.pdf /home/skip/EPFL/Physique_III && zathura /home/skip/EPFL/Physique_III/$var &'
+alias ana='var=$(ls /home/skip/Downloads/ | grep .pdf) && mv /home/skip/Downloads/*.pdf /home/skip/EPFL/Analyse_III && zathura /home/skip/EPFL/Analyse_III/$var &'
 alias fcd='cd $(find . -type d | fzf)'
+alias loadtex='zathura build/master.pdf& localleaf -m latex/master.tex ./ -- --outdir=build/ --auxdir=aux/'
 
 
 # Shell integrations
@@ -84,3 +84,5 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

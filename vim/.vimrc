@@ -68,12 +68,16 @@ endif
 
 
 " ma config
+source /home/skip/code/anki_vim/Ankiedit.vim
+autocmd BufRead,BufNewFile *.anki set filetype=anki
+autocmd BufRead,BufNewFile *.anki nnoremap t :!cat % > /home/skip/code/anki_vim/anki-preview/cards/current.html<CR>
+
 call plug#begin('~/.vim/plugged')
 
    " list your plugins here
   Plug 'tpope/vim-dadbod'
-  	let g:db = 'sqlite:' . expand('~/code/anki/EmptyDeck/collection.anki2')
-  	let g:db = 'sqlite:' . expand('~/code/anki/GCSE/collection.anki2')
+  	let g:db = 'sqlite:' . expand('/home/skip/.var/app/net.ankiweb.Anki/data/Anki2/User 1/collection.anki2')
+  	"let g:db = 'sqlite:' . expand('~/code/anki_vim/MAT/collection.anki21')
   Plug 'kristijanhusak/vim-dadbod-ui'
   Plug 'kristijanhusak/vim-dadbod-completion' "Optional
 
@@ -128,6 +132,7 @@ call plug#begin('~/.vim/plugged')
 
 call plug#end()
 
+
 "setlocal spell
 "set spelllang=fr
 "inoremap <c-l> <c-g>u<esc>[s1z=`]a<c-g>u
@@ -153,7 +158,7 @@ nnoremap vw viw
 
 " quit de maniere efficace
 nnoremap S :q<cr>
-nnoremap QQQQ :q!<cr>
+nnoremap QQ :q!<cr>
 
 " copy to clipboard (must have +clipboard option)
 vnoremap <c-c> "+y
@@ -169,9 +174,12 @@ nnoremap <c-n> :NERDTree<cr>
 
 inoremap <expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
 
-inoremap <c-f> <esc>:silent exec '!cp '.b:vimtex.root.'/figures/temp.png '.b:vimtex.root.'/figures/'.getline('.').'.png'<cr>:silent exec '!drawing '.b:vimtex.root.'/figures/'.getline('.').'.png'<cr>:redraw!<cr><esc>diwa\begin{figure}[!h]<cr>\centering<cr>\includegraphics[width=0.6\textwidth]{figures/<esc>pa.png}<cr>\end{figure}<esc>:w<cr>
+"inoremap <c-f> <esc>:silent exec '!cp '.b:vimtex.root.'/figures/temp.png '.b:vimtex.root.'/figures/'.getline('.').'.png'<cr>:silent exec '!drawing '.b:vimtex.root.'/figures/'.getline('.').'.png'<cr>:redraw!<cr><esc>diwa\begin{figure}[!h]<cr>\centering<cr>\includegraphics[width=0.6\textwidth]{figures/<esc>pa.png}<cr>\end{figure}<esc>:w<cr>
+"inoremap <c-f> <esc>:silent exec '!cp /home/skip/code/anki_vim/temp.png /home/skip/.var/app/net.ankiweb.Anki/data/Anki2/User\ 1/collection.media/'.getline('.').'.png'<cr>:silent exec '!chmod 777 /home/skip/.var/app/net.ankiweb.Anki/data/Anki2/User\ 1/collection.media/'.getline('.').'.png'<cr>:silent exec '!drawing /home/skip/.var/app/net.ankiweb.Anki/data/Anki2/User\ 1/collection.media/'.getline('.').'.png'<cr>:redraw!<cr><esc>diwa<esc>pa.png}<cr>\end{figure}<esc>:w<cr>
+inoremap <c-f> <esc>:silent exec '!cp /home/skip/code/anki_vim/temp.png /home/skip/code/anki_vim/temp.tmp.png'<cr>:silent exec '!drawing /home/skip/code/anki_vim/temp.tmp.png'<cr>:silent exec '!mv /home/skip/code/anki_vim/temp.tmp.png /home/skip/.var/app/net.ankiweb.Anki/data/Anki2/User\ 1/collection.media/'.getline('.').'.png'<cr>:redraw!<cr><esc>diwa<img src="<esc>pa.png"><esc>:redraw!<cr>a
+inoremap <c-d> <esc>:silent exec '!ls -t /home/skip/Images/screenshot \| head -n 1 \| xclip -selection clipboard'<cr>:silent exec '!cp -p "$(find /home/skip/Images/screenshot -maxdepth 1 -type f -printf ''\%T@ \%p\n'' \| sort -n \| tail -n 1 \| cut -d'' '' -f2-)" /home/skip/.var/app/net.ankiweb.Anki/data/Anki2/User\ 1/collection.media/'<cr>:redraw!<cr>a<img src="<cr>"><esc>kA
 
-inoremap <c-d> <esc>:silent exec '!cp '.b:vimtex.root.'/figures/temp2.png '.b:vimtex.root.'/figures/'.getline('.').'.png'<cr>:silent exec '!drawing '.b:vimtex.root.'/figures/'.getline('.').'.png'<cr>:redraw!<cr><esc>diwa\begin{figure}[!h]<cr>\centering<cr>\includegraphics[width=0.6\textwidth]{figures/<esc>pa.png}<cr>\end{figure}<esc>:w<cr>
+"inoremap <c-d> <esc>:silent exec '!cp '.b:vimtex.root.'/figures/temp2.png '.b:vimtex.root.'/figures/'.getline('.').'.png'<cr>:silent exec '!drawing '.b:vimtex.root.'/figures/'.getline('.').'.png'<cr>:redraw!<cr><esc>diwa\begin{figure}[!h]<cr>\centering<cr>\includegraphics[width=0.6\textwidth]{figures/<esc>pa.png}<cr>\end{figure}<esc>:w<cr>
 
 nnoremap <c-f> yiwo<esc>p:silent exec '!drawing '.b:vimtex.root.'/figures/'.getline('.').'.png'<cr>:redraw!<cr>dd:w<cr>
 
@@ -189,3 +197,11 @@ nnoremap <CR> :Files<CR>
 nnoremap <c-h> :hide edit 
 
 cnoreabbrev ctag exec '!ctags -R ./'
+
+nnoremap <c-c> :Newcard<CR>
+nnoremap <c-CR> :Validate<CR>
+nnoremap <F13> :echo "Ctrl+Enter"<CR>
+vnoremap <c-x> xi{{c1::}}<esc>hhpF:hh
+inoremap <c-x> {{c1::}}<esc>hhhh
+
+

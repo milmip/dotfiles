@@ -22,6 +22,10 @@ yellow = "0xd8a657"
 background = "0x282828"
 foreground = "0xd4be98"
 
+[[keyboard.bindings]]
+key = "Enter"
+mods = "Control"
+chars = "\u001b[13;5u"
 #[gruvbox_material_hard_dark.bright]
 #black = "0x32302f"
 #blue = "0x7daea3"
