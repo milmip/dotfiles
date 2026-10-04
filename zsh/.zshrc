@@ -1,7 +1,4 @@
-#fastfetch
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
+# p10k configure
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
@@ -112,7 +109,7 @@ text_software=(vim)
 fo_categories=(img document office video audio text)
 terminal_software=(vim)
 fo_default_software=vim
-fo_excluded_dirs=(~/EPFL/archive)
+fo_excluded_dirs=(~/EPFL/archive venv)
 
 fd() {
   local dir
@@ -122,10 +119,7 @@ fd() {
 }
 
 fo() {
-  local finder
-  if (( $+commands[fd] )); then finder=fd
-  elif (( $+commands[fdfind] )); then finder=fdfind
-  fi
+  local finder=fdfind
 
   # Filtre d'exclusion : retire les chemins situés dans fo_excluded_dirs
   local -a gargs
