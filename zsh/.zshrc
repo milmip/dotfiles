@@ -42,7 +42,7 @@ bindkey '^n' history-search-forward
 bindkey '^[w' kill-region
 
 # History
-HISTSIZE=5000
+HISTSIZE=10000
 HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
 HISTDUP=erase
@@ -62,7 +62,6 @@ zstyle ':completion:*' menu no
 
 # Aliases
 alias ls='ls --color'
-alias c='clear'
 alias ga='git add'
 alias gaa='git add .'
 alias gl='git log --oneline --graph --parents --all --decorate'
@@ -70,15 +69,12 @@ alias gout='git checkout'
 alias gcm='git commit'
 alias gst='git status'
 alias gres='git restore ./'
-alias za='var=$(fdfind --exclude EPFL/archive | fzf --query="EPFL ") && zathura $var --log-level=error &'
-alias phy='var=$(ls /home/skip/Downloads/ | grep .pdf) && mv /home/skip/Downloads/*.pdf /home/skip/EPFL/Physique_III && zathura /home/skip/EPFL/Physique_III/$var &'
-alias ana='var=$(ls /home/skip/Downloads/ | grep .pdf) && mv /home/skip/Downloads/*.pdf /home/skip/EPFL/Analyse_III && zathura /home/skip/EPFL/Analyse_III/$var &'
-alias fcd='cd $(find . -type d | fzf)'
+#alias za='var=$(fdfind --exclude EPFL/archive | fzf --query="EPFL ") && zathura $var --log-level=error &'
 alias loadtex='zathura build/master.pdf& localleaf -m latex/master.tex ./ -- --outdir=build/ --auxdir=aux/'
 
 
 # Shell integrations
-source <(fzf --zsh)
+#source <(fzf --zsh)
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -86,3 +82,146 @@ export NVM_DIR="$HOME/.nvm"
 
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+
+# fh - repeat history
+fh() {
+  print -z $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed -E 's/ *[0-9]*\*? *//' | sed -E 's/\\/\\\\/g')
+}
+
+# ───────── fo : fzf open ─────────
+# Catégories : à chaque <cat> correspondent <cat>_extensions et <cat>_software
+img_extensions=(png jpg jpeg gif webp bmp svg tiff ico)
+img_software=(eog)
+
+document_extensions=(pdf)
+document_software=(zathura)
+
+office_extensions=(doc docx odt xls xlsx ods ppt pptx odp)
+office_software=(libreoffice)
+
+video_extensions=(mp4 mkv avi mov webm flv wmv)
+video_software=(vlc)
+
+audio_extensions=(mp3 flac ogg wav m4a opus)
+audio_software=(vlc)
+
+text_extensions=(txt md json yaml yml toml conf ini sh zsh py js ts html css c cpp h rs go lua)
+text_software=(vim)
+
+fo_categories=(img document office video audio text)
+terminal_software=(vim)
+fo_default_software=vim
+fo_excluded_dirs=(~/EPFL/archive)
+
+fd() {
+  local dir
+  dir=$(find ${1:-.} -path '*/\.*' -prune \
+                  -o -type d -print 2> /dev/null | fzf +m) &&
+  cd "$dir"
+}
+
+fo() {
+  local finder
+  if (( $+commands[fd] )); then finder=fd
+  elif (( $+commands[fdfind] )); then finder=fdfind
+  fi
+
+  # Filtre d'exclusion : retire les chemins situés dans fo_excluded_dirs
+  local -a gargs
+  local d
+  for d in "${fo_excluded_dirs[@]}"; do gargs+=(-e "${d%/}/"); done
+
+  local -a sels
+  {
+    if [[ -n $finder ]]; then
+      $finder --type f --hidden --exclude '.*/' --absolute-path "$@"
+    else
+      find "${(@)${@:-.}:A}" -type f -not -path '*/.*/*'
+    fi
+  } | { (( $#gargs )) && grep -vF "${gargs[@]}" || cat } \
+    | sed "s|^$PWD/||" \
+    | fzf --query="" --multi --preview 'file -b {}' \
+    | while IFS= read -r line; do sels+=("$line"); done
+
+  local f ext cat_name exts_var sw_var c cmd
+  local -a exts sws
+  for f in "${sels[@]}"; do
+    [[ -z $f ]] && continue
+    ext=${f:e:l}
+    cmd=""
+
+    for cat_name in "${fo_categories[@]}"; do
+      exts_var="${cat_name}_extensions"
+      exts=( "${(@P)exts_var}" )
+      if (( ${exts[(Ie)$ext]} )); then
+        sw_var="${cat_name}_software"
+        sws=( "${(@P)sw_var}" )
+        for c in "${sws[@]}"; do
+          if (( $+commands[$c] )); then cmd=$c; break; fi
+        done
+        break
+      fi
+    done
+
+    [[ -z $cmd ]] && cmd=$fo_default_software
+
+    if (( ${terminal_software[(Ie)$cmd]} )); then
+      "$cmd" "$f"                                  # terminal : premier plan
+    else
+      setsid "$cmd" "$f" >/dev/null 2>&1 &!        # GUI : détaché
+    fi
+  done
+}
+feo() {
+  local finder
+  if (( $+commands[fd] )); then finder=fd
+  elif (( $+commands[fdfind] )); then finder=fdfind
+  fi
+
+  # Filtre d'exclusion : retire les chemins situés dans fo_excluded_dirs
+  local -a gargs
+  local d
+  for d in "${fo_excluded_dirs[@]}"; do gargs+=(-e "${d%/}/"); done
+
+  local -a sels
+  {
+    if [[ -n $finder ]]; then
+      $finder --type f --hidden --exclude '.*/' --absolute-path "$@"
+    else
+      find "${(@)${@:-.}:A}" -type f -not -path '*/.*/*'
+    fi
+  } | { (( $#gargs )) && grep -vF "${gargs[@]}" || cat } \
+    | sed "s|^$PWD/||" \
+    | fzf --query="EPFL " --multi --preview 'file -b {}' \
+    | while IFS= read -r line; do sels+=("$line"); done
+
+  local f ext cat_name exts_var sw_var c cmd
+  local -a exts sws
+  for f in "${sels[@]}"; do
+    [[ -z $f ]] && continue
+    ext=${f:e:l}
+    cmd=""
+
+    for cat_name in "${fo_categories[@]}"; do
+      exts_var="${cat_name}_extensions"
+      exts=( "${(@P)exts_var}" )
+      if (( ${exts[(Ie)$ext]} )); then
+        sw_var="${cat_name}_software"
+        sws=( "${(@P)sw_var}" )
+        for c in "${sws[@]}"; do
+          if (( $+commands[$c] )); then cmd=$c; break; fi
+        done
+        break
+      fi
+    done
+
+    [[ -z $cmd ]] && cmd=$fo_default_software
+
+    if (( ${terminal_software[(Ie)$cmd]} )); then
+      "$cmd" "$f"                                  # terminal : premier plan
+    else
+      setsid "$cmd" "$f" >/dev/null 2>&1 &!        # GUI : détaché
+    fi
+  done
+}
